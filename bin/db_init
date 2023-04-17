@@ -1,0 +1,66 @@
+#!usr/bin/env php
+<?php
+
+$dsn = 'sqlite:' . dirname(__DIR__) . '/database/database.sqlite';
+
+$conn = new PDO($dsn);
+
+$createTableUsers = "CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    email_verified BOOLEAN NOT NULL,
+    password TEXT NOT NULL,
+    picture TEXT,
+    phone TEXT,
+    city TEXT,
+    state VAR(2),
+    about TEXT,
+    role INTEGER NOT NULL,
+    created_at TEXT,
+    updated_at TEXT
+)";
+
+$createTablePets = "CREATE TABLE IF NOT EXISTS pets (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    species INTEGER NOT NULL,
+    size INTEGER NOT NULL,
+    status INTEGER NOT NULL,
+    birth_date TEXT NOT NULL,
+    city TEXT NOT NULL,
+    state VAR(2) NOT NULL,
+    picture TEXT NOT NULL,
+    created_at TEXT,
+    updated_at TEXT
+)";
+
+$createTableAdoptions = "CREATE TABLE IF NOT EXISTS adoptions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    pet_id INTEGER NOT NULL,
+    status INTEGER NOT NULL,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+)";
+
+$result = $conn->query($createTableUsers);
+
+if ($result) {
+    echo "Table 'users' created with success." . PHP_EOL;
+    $result = $conn->query($createTablePets);
+}
+
+if ($result) {
+    echo "Table 'pets' created with success." . PHP_EOL;
+    $result = $conn->query($createTableAdoptions);
+}
+
+if ($result) {
+    echo "Table 'adoptions' created with success." . PHP_EOL;
+    exit("Finished. No errors found." . PHP_EOL);
+}
+
+exit("Error: some tables could not be created." . PHP_EOL);

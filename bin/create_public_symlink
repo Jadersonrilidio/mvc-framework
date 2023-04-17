@@ -1,0 +1,42 @@
+#!usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require_once dirname(__DIR__) . DIRECTORY_SEPARATOR . 'bootstrap.php';
+
+
+
+$cssFiles = scandir(RESOURCES_PATH . 'css' . SLASH);
+
+$filteredCssFiles = array_filter($cssFiles, function ($cssFilename) {
+    return str_starts_with($cssFilename, '.') ? false : true;
+});
+
+foreach ($filteredCssFiles as $cssFilename) {
+    symlink(RESOURCES_PATH . 'css' . SLASH . $cssFilename, '.' . SLASH . 'public' . SLASH . 'css' . SLASH . $cssFilename);
+}
+
+
+
+$images = scandir(RESOURCES_PATH . 'img' . SLASH);
+
+$filteredImages = array_filter($images, function ($imageFilename) {
+    return str_starts_with($imageFilename, '.') ? false : true;
+});
+
+foreach ($filteredImages as $imageFilename) {
+    symlink(RESOURCES_PATH . 'img' . SLASH . $imageFilename, '.' . SLASH . 'public' . SLASH . 'img' . SLASH . $imageFilename);
+}
+
+
+
+$uploads = scandir(UPLOAD_DIR);
+
+$filteredUploads = array_filter($uploads, function ($filename) {
+    return str_starts_with($filename, '.') ? false : true;
+});
+
+foreach ($filteredUploads as $filename) {
+    symlink(UPLOAD_DIR . $filename, '.' . SLASH . 'public' . SLASH . 'uploads' . SLASH . $filename);
+}

@@ -1,0 +1,37 @@
+{
+    "name": "jayrods/mvc-framework",
+    "description": "A simple MVC framework for building webpages and APIs",
+    "type": "project",
+    "authors": [
+        {
+            "name": "jay rods",
+            "email": "jadersonrilidio@gmail.com",
+            "homepage": "https://www.github.com/Jadersonrilidio"
+        }
+    ],
+    "license": "MIT",
+    "autoload": {
+        "files": [
+            "functions/dump_and_exit.php",
+            "functions/env.php",
+            "functions/print_and_exit.php"
+        ],
+        "psr-4": {
+            "Jayrods\\MvcFramework\\": "src/"
+        }
+    },
+    "require": {
+        "phpmailer/phpmailer": "^6.8",
+        "vlucas/phpdotenv": "^5.5",
+        "php-di/php-di": "^7.0"
+    },
+    "scripts": {
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "php -S localhost:8001 -t public/"
+        ],
+        "db:init": "php bin/db_init",
+        "db:create": "php bin/db_make",
+        "db:get": "php bin/db_get"
+    }
+}
